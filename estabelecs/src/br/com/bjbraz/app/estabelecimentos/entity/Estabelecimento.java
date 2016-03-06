@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,10 +21,17 @@ import javax.persistence.Transient;
  * The persistent class for the estabelecimento database table.
  * 
  */
+@NamedQueries({ 
+	
+	@NamedQuery(name = Estabelecimento.BUSCAR_POR_DESCRICAO, query = "from br.com.bjbraz.app.estabelecimentos.entity.Estabelecimento c where upper(c.nomeFantasia) = upper(:descricao)  ")
+
+})
 @Entity
 @Table(name = "estabelecimento")
 public class Estabelecimento implements Serializable {
     private static final long serialVersionUID = 1L;
+
+	public static final String BUSCAR_POR_DESCRICAO = "Estabelecimento.BUSCAR_POR_DESCRICAO";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

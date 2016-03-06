@@ -17,15 +17,19 @@ import javax.persistence.Table;
  * 
  */
 
-@NamedQueries({ @NamedQuery(name = EstabelecimentoSubGrupo.BUSCAR_POR_GRUPO, 
-query = "from br.com.bjbraz.app.estabelecimentos.entity.EstabelecimentoSubGrupo c "
-    + " where c.estabelecimentoGrupo.idGrupo = :id  ") })
+@NamedQueries({ 
+	
+	@NamedQuery(name = EstabelecimentoSubGrupo.BUSCAR_POR_GRUPO, query = "from br.com.bjbraz.app.estabelecimentos.entity.EstabelecimentoSubGrupo c where c.estabelecimentoGrupo.idGrupo = :id  "),
+	@NamedQuery(name = EstabelecimentoSubGrupo.BUSCAR_POR_DESCRICAO, query = "from br.com.bjbraz.app.estabelecimentos.entity.EstabelecimentoSubGrupo c where c.nomeSubGrupo = :descricao  ")
+
+})
 @Entity
 @Table(name = "estabelecimento_sub_grupo")
 public class EstabelecimentoSubGrupo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final String BUSCAR_POR_GRUPO = "EstabelecimentoSubGrupo.BUSCAR_POR_GRUPO";
+    public static final String BUSCAR_POR_DESCRICAO = "EstabelecimentoSubGrupo.BUSCAR_POR_DESCRICAO";
 
     @Id
     @Column(name = "id_sg")

@@ -28,7 +28,7 @@ public class DummyServiceImpl implements DummyService{
 	
 	@Override
 	public List<Cidade> listAll2() {
-		dao2.teste(1, 1);
+		dao2.listarTodasCategorias();
 		return null;
 	}	
 

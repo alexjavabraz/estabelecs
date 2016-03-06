@@ -15,7 +15,7 @@ import javax.persistence.Table;
 	                + " where idEstado = :idEstado order by cidade")		
 })
 @Entity
-@Table(name="cidade", schema="bjbraz")
+@Table(name="cidade", schema="alex_database")
 public class Cidade implements java.io.Serializable{
 
 	private static final long serialVersionUID = 307326131085398937L;
