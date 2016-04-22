@@ -46,6 +46,11 @@ public class RunningMode {
         // runningMode definido externamente
         try {
             String systemRunningModes = System.getProperty("runningMode", null);
+            
+            if(systemRunningModes == null){
+            	systemRunningModes = "dev";
+            }
+            
             parse(systemRunningModes, modes);
         }
         catch (SecurityException e) {
