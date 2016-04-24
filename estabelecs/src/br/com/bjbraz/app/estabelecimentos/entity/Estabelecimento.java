@@ -1,8 +1,13 @@
 package br.com.bjbraz.app.estabelecimentos.entity;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +20,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.apache.commons.io.IOUtils;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 
 /**
@@ -52,7 +62,7 @@ public class Estabelecimento implements Serializable {
     private int idCidade;
 
     @Column(name = "id_destaque")
-    private int idDestaque;
+    private boolean idDestaque;
 
     @Column(name = "id_estado")
     private int idEstado;
@@ -97,6 +107,9 @@ public class Estabelecimento implements Serializable {
     @Column(name="id_sub_grupo")
     private Integer idSubGrupo;
     
+    @Column(name="posicao")
+    private Integer posicao;    
+    
     @Transient
     EstabelecimentoSubGrupo sgrupo     = null;
     
@@ -105,6 +118,18 @@ public class Estabelecimento implements Serializable {
     
     @Transient
     EstabelecimentoCategoria categoria = null;
+    
+    @Transient
+    private Date dataInclusaoInicio;
+    
+    @Transient
+	private Date dataInclusaoFim;
+    
+    @Transient
+    private StreamedContent imagem;
+    
+    @Transient
+    private UploadedFile file;
 
     public Estabelecimento() {
     }
@@ -157,15 +182,15 @@ public class Estabelecimento implements Serializable {
         this.idCidade = idCidade;
     }
 
-    public int getIdDestaque() {
-        return this.idDestaque;
-    }
+    public boolean isIdDestaque() {
+		return idDestaque;
+	}
 
-    public void setIdDestaque(int idDestaque) {
-        this.idDestaque = idDestaque;
-    }
+	public void setIdDestaque(boolean idDestaque) {
+		this.idDestaque = idDestaque;
+	}
 
-    public int getIdEstado() {
+	public int getIdEstado() {
         return this.idEstado;
     }
 
@@ -308,6 +333,68 @@ public class Estabelecimento implements Serializable {
     public void setCategoria(EstabelecimentoCategoria categoria) {
         this.categoria = categoria;
     }
-    
-    
+
+	public Integer getPosicao() {
+		return posicao;
+	}
+
+	public void setPosicao(Integer posicao) {
+		this.posicao = posicao;
+	}
+
+	public Date getDataInclusaoInicio() {
+		return dataInclusaoInicio;
+	}
+
+	public void setDataInclusaoInicio(Date dataInclusaoInicio) {
+		this.dataInclusaoInicio = dataInclusaoInicio;
+	}
+
+	public Date getDataInclusaoFim() {
+		return dataInclusaoFim;
+	}
+
+	public void setDataInclusaoFim(Date dataInclusaoFim) {
+		this.dataInclusaoFim = dataInclusaoFim;
+	}
+	
+	public StreamedContent getImagem() {
+		try {
+			imagem = null;
+			BufferedImage bufferedImg = new BufferedImage(100, 25, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2 = bufferedImg.createGraphics();
+			g2.drawString("This is a text", 0, 10);
+			
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImg, "png", os);
+			imagem = new DefaultStreamedContent(new ByteArrayInputStream(getImagem1()), "image/png", "imagem"+System.currentTimeMillis()+".png");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return imagem;
+	}
+	
+	public void setImagem(StreamedContent s ){
+		imagem = s;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+		try {
+			byte[] bytes = IOUtils.toByteArray(file.getInputstream());
+			setImagem1(bytes);
+			getImagem();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
 }

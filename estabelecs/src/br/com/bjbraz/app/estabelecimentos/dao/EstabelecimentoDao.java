@@ -14,4 +14,6 @@ public interface EstabelecimentoDao {
 
 	public Estabelecimento listarEstabelecientoPorNome(String nomeFantasia);
 
+	public List<Estabelecimento> listarTodosEstabelecimentos(Estabelecimento filtro);
+
 }

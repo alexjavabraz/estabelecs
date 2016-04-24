@@ -4,15 +4,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
@@ -25,8 +23,6 @@ import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.sun.org.apache.xerces.internal.impl.xs.SubstitutionGroupHandler;
-
 import br.com.bjbraz.app.estabelecimentos.config.jsf.BasicBBean;
 import br.com.bjbraz.app.estabelecimentos.entity.Estabelecimento;
 import br.com.bjbraz.app.estabelecimentos.entity.EstabelecimentoCategoria;
@@ -38,7 +34,7 @@ import br.com.bjbraz.app.estabelecimentos.service.EstadoService;
 import br.com.bjbraz.app.estabelecimentos.validator.Email;
 
 @Component
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class MeuManagedBBean extends BasicBBean {
 
@@ -57,7 +53,7 @@ public class MeuManagedBBean extends BasicBBean {
 	private String celPhone;
 	private String fileName;
 
-	@Email(message = "Favor informar um email válido")
+	@Email(message = "Favor informar um email vÃ¡lido")
 	private String email;
 
 	private Estabelecimento estabelecimento = new Estabelecimento();
@@ -217,7 +213,7 @@ public class MeuManagedBBean extends BasicBBean {
 		Estabelecimento estabelecimentoComMesmoNome = service.listarEstabelecimentoPorNome(getEstabelecimento().getNomeFantasia());
 		
 		if(estabelecimentoComMesmoNome != null){
-			FacesMessage message = new FacesMessage("Já existe um Estabelecimento com este nome");
+			FacesMessage message = new FacesMessage("Jï¿½ existe um Estabelecimento com este nome");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return null;
 		}
