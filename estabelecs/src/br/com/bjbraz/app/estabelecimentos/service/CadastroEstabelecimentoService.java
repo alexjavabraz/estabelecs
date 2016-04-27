@@ -30,5 +30,7 @@ public interface CadastroEstabelecimentoService {
 	public EstabelecimentoSubGrupo listarSubGrupoPorNome(String nomeDoSubGrupo);
 
 	public Estabelecimento listarEstabelecimentoPorNome(String nomeFantasia);
+
+	public List<Estabelecimento> listarTodosEstabelecimentos(Estabelecimento filtro);
     
 }

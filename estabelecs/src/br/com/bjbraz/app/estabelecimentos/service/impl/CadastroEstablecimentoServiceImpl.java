@@ -108,4 +108,10 @@ public class CadastroEstablecimentoServiceImpl implements CadastroEstabeleciment
 		return estabelecimentoDao.listarEstabelecientoPorNome(nomeFantasia);
 	}
 
+	@Transactional
+	@Override
+	public List<Estabelecimento> listarTodosEstabelecimentos(Estabelecimento filtro) {
+		return estabelecimentoDao.listarTodosEstabelecimentos(filtro);
+	}
+
 }
