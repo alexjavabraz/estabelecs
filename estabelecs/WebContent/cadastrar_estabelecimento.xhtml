@@ -33,7 +33,7 @@
 		    
 		    <p:inputText id="bairro" placeholder="Bairro"  value="#{meuManagedBBean.estabelecimento.bairro}" />
 		    <p:inputMask id="telFixo" placeholder="Telefone Fixo" value="#{meuManagedBBean.estabelecimento.telefone}"    mask="(999) 9999-9999"/>	    
-			<p:inputMask id="telCel" placeholder="Telefone Celular" maxlength="6" value="#{meuManagedBBean.estabelecimento.slogam}" mask="(999) 99999-9999"/>	    
+			<p:inputMask id="telCel" placeholder="Telefone Celular" maxlength="6" value="#{meuManagedBBean.estabelecimento.telefoneCelular}" mask="(999) 99999-9999"/>	    
 		    
 		    <h:outputText value="Cep" /> 
 		    <h:outputText value="Site" /> 
@@ -54,11 +54,11 @@
         	<p:selectBooleanCheckbox value="#{meuManagedBBean.destaque}" />
     		<p:fileUpload value="#{meuManagedBBean.file}" mode="simple" skinSimple="true"/>
     		
-		    <h:outputText value="" />
+		    <h:outputText value="Slogan" />
 		    <h:outputText value="Posição" />  
 		    <h:outputText value="" />
 		    
-		    <h:outputText value="" />
+		    <p:inputText id="slogam" placeholder="A frase que define o anunciante"  value="#{meuManagedBBean.estabelecimento.slogam}"/>
 		    <p:inputText id="posicao" placeholder="posicao"  value="#{meuManagedBBean.estabelecimento.posicao}"/>
 		    <h:outputText value="Quanto maior o valor, mais acima na lista aparecerá" />		    
  
@@ -69,7 +69,7 @@
 				</p:multiSelectListbox> 		
 			<p align="center">
 			
-			<p:commandButton ajax="false" action="#{meuManagedBBean.upload}" value="Adicionar Imagem" icon="ui-icon-check" style="display:block;margin:10px 0" validateClient="true"/>
+			<p:commandButton ajax="false" action="#{meuManagedBBean.upload}" value="Adicionar Imagem" icon="ui-icon-check" style="display:block;margin:10px 0" validateClient="false"/>
 		</p>
 
 	</h:form>

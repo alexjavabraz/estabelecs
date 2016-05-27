@@ -15,5 +15,8 @@ public interface SimpleJDBCDao {
     public List<Map<String, Object>> listarTodosOsSubGrupos(Integer idGrupo);
     
     public List<Estabelecimento> pesquisarEstabelecimentos(String idCategoria, String idGrupo, String idSubGrupo, String query);
+    
+    public List<Estabelecimento> listarPorSubGrupo(Integer idSubGrupo);
+    public List<Estabelecimento> listarPorGrupo(Integer idGrupo);
 
 }

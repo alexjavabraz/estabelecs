@@ -13,7 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -95,6 +97,9 @@ public class Estabelecimento implements Serializable {
 
     private String telefone;
     
+    @Column(name = "telefone_celular")
+    private String telefoneCelular;
+    
     @Column(name="bairro", length=100, nullable=true)
     private String bairro;
     
@@ -103,12 +108,16 @@ public class Estabelecimento implements Serializable {
     
     @Column(name="facebook", length=60, nullable=true)
     private String facebook;  
-    
-    @Column(name="id_sub_grupo")
+
+    @Transient
     private Integer idSubGrupo;
     
     @Column(name="posicao")
-    private Integer posicao;    
+    private Integer posicao;   
+    
+    @ManyToOne
+    @JoinColumn(name = "id_sub_grupo")
+    private EstabelecimentoSubGrupo estabelecimentoSugGrupo;
     
     @Transient
     EstabelecimentoSubGrupo sgrupo     = null;
@@ -395,6 +404,20 @@ public class Estabelecimento implements Serializable {
 		
 	}
 	
-	
+    public EstabelecimentoSubGrupo getEstabelecimentoSugGrupo() {
+		return estabelecimentoSugGrupo;
+	}
+
+	public void setEstabelecimentoSugGrupo(EstabelecimentoSubGrupo estabelecimentoSugGrupo) {
+		this.estabelecimentoSugGrupo = estabelecimentoSugGrupo;
+	}
+
+	public String getTelefoneCelular() {
+		return telefoneCelular;
+	}
+
+	public void setTelefoneCelular(String telefoneCelular) {
+		this.telefoneCelular = telefoneCelular;
+	}
 	
 }

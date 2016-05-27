@@ -32,5 +32,8 @@ public interface CadastroEstabelecimentoService {
 	public Estabelecimento listarEstabelecimentoPorNome(String nomeFantasia);
 
 	public List<Estabelecimento> listarTodosEstabelecimentos(Estabelecimento filtro);
+	
+	public List<Estabelecimento> listarPorSubGrupo(Integer idSubGrupo);
+    public List<Estabelecimento> listarPorGrupo(Integer idGrupo);
     
 }

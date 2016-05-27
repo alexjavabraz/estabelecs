@@ -114,4 +114,14 @@ public class CadastroEstablecimentoServiceImpl implements CadastroEstabeleciment
 		return estabelecimentoDao.listarTodosEstabelecimentos(filtro);
 	}
 
+	@Override
+	public List<Estabelecimento> listarPorSubGrupo(Integer idSubGrupo) {
+		return simpleDao.listarPorSubGrupo(idSubGrupo);
+	}
+
+	@Override
+	public List<Estabelecimento> listarPorGrupo(Integer idGrupo) {
+		return simpleDao.listarPorGrupo(idGrupo);
+	}
+
 }

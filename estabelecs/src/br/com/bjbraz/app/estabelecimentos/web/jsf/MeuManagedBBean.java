@@ -209,6 +209,7 @@ public class MeuManagedBBean extends BasicBBean {
 		
 		EstabelecimentoSubGrupo esg = service.listarSubGrupoPorNome(selection);
 		getEstabelecimento().setIdSubGrupo(esg.getIdSg());
+		getEstabelecimento().setEstabelecimentoSugGrupo(esg);
 		
 		Estabelecimento estabelecimentoComMesmoNome = service.listarEstabelecimentoPorNome(getEstabelecimento().getNomeFantasia());
 		

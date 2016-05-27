@@ -23,7 +23,6 @@ import br.com.bjbraz.app.estabelecimentos.config.jsf.BasicBBean;
 import br.com.bjbraz.app.estabelecimentos.entity.Estabelecimento;
 import br.com.bjbraz.app.estabelecimentos.service.CadastroEstabelecimentoService;
 
-@ViewScoped
 @ManagedBean
 @Component
 public class PesquisarEstabelecimentosBean extends BasicBBean {
