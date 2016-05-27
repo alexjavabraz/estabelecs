@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html" encoding="ISO-8859-1">
+<h:head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type" />
+</h:head>
+
+<h:body>
+	<ui:include src="menu.xhtml" />
+	<h:form id="formularioPesquisar">
+		<p:growl id="messages" showDetail="true" />
+		
+		<p:panelGrid columns="3" layout="grid">
+			<p:graphicImage value="/imagens/app/encontre.jpg" />
+			
+			
+			
+			<h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" update="tbl" actionListener="#{pesquisaAplicacaoBBen.buscarPorGrupo}" >
+            		<f:attribute name="idGrupo" value="3" />
+            		<p:graphicImage value="/imagens/app/comer_beber.jpg" />
+            </h:commandLink>
+			
+			<p:graphicImage value="/imagens/app/diversao.jpg" />
+			<p:graphicImage value="/imagens/app/noticias.jpg" />
+			<p:graphicImage value="imagens/app/promocoes.jpg" />
+			
+			<h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" update="tbl" actionListener="#{pesquisaAplicacaoBBen.buscarPorGrupo}" >
+            		<f:attribute name="idGrupo" value="8" />
+            		<p:graphicImage value="imagens/app/servicos.jpg" />
+            </h:commandLink>
+			
+		</p:panelGrid>
+		<p:panelGrid columns="4" layout="grid">
+		
+            <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default"><p:graphicImage value="imagens/app/guiaversao2003.jpg"  width="200px" height="100px" /></h:commandLink>
+            
+            <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" update="tbl" actionListener="#{pesquisaAplicacaoBBen.buscarPorGrupo}" >
+            		<f:attribute name="idGrupo" value="3" />
+            		<p:graphicImage value="imagens/app/guiacomerbeber3003.jpg" width="200px" height="100px"/>
+            </h:commandLink>
+            
+            <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" update="tbl"  actionListener="#{pesquisaAplicacaoBBen.buscarPorGrupo}" >
+            		<f:attribute name="idGrupo" value="3" />
+            		<p:graphicImage value="imagens/app/shows3003.jpg" width="200px" height="100px"/>
+            </h:commandLink>
+            
+            <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" update="tbl"  actionListener="#{pesquisaAplicacaoBBen.buscarPorGrupo}" >
+            		<f:attribute name="idGrupo" value="6" />
+            		<p:graphicImage value="imagens/app/fitness.jpg" width="200px" height="100px"/>
+            </h:commandLink>
+            
+            <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" update="tbl"  actionListener="#{pesquisaAplicacaoBBen.buscarPorGrupo}" >
+            		<f:attribute name="idGrupo" value="4" />
+            		<p:graphicImage value="imagens/app/petshop.jpg" width="200px" height="100px"/>
+            </h:commandLink>
+            
+            <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" update="tbl"  actionListener="#{pesquisaAplicacaoBBen.buscarPorSubGrupo}" >
+            		<f:attribute name="idSubGrupo" value="11" />
+            		<p:graphicImage value="imagens/app/cafeterias.jpg" width="200px" height="100px"/>
+            </h:commandLink>
+            
+            <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" update="tbl"  actionListener="#{pesquisaAplicacaoBBen.buscarPorSubGrupo}" >
+            		<f:attribute name="idSubGrupo" value="1" />
+            		<p:graphicImage value="imagens/app/salaodebeleza1.jpg" width="200px" height="100px"/>
+            </h:commandLink>
+            
+            <h:commandLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" update="tbl"  actionListener="#{pesquisaAplicacaoBBen.buscarPorGrupo}" >
+            		<f:attribute name="idGrupo" value="5" />
+            		<p:graphicImage value="imagens/app/guiasaude.jpg" width="200px" height="100px"/>
+            </h:commandLink>                       
+						
+		</p:panelGrid>
+		
+		<p:panelGrid columns="2">
+		
+		
+		
+		
+		
+		</p:panelGrid>
+		
+		<p:dataTable id="tbl" var="estabelecimento" rendered="#{pesquisaAplicacaoBBen.estabelecimentos ne null}" value="#{pesquisaAplicacaoBBen.estabelecimentos}"
+					paginator="true" rows="10" style="margin-bottom:20px">
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nome Fantasia" />
+						</f:facet>
+						<h:outputText value="#{estabelecimento.nomeFantasia}" />
+					</p:column>	
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Sub-Grupo" />
+						</f:facet>
+						<h:outputText value="#{estabelecimento.sgrupo.nomeSubGrupo}" />
+					</p:column>						
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="E-mail" />
+						</f:facet>
+						<h:outputText value="#{estabelecimento.email}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Site" />
+						</f:facet>
+						<h:outputText value="#{estabelecimento.site}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Telefone" />
+						</f:facet>
+						<h:outputText value="#{estabelecimento.telefone}" />
+					</p:column>	
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Endereço" />
+						</f:facet>
+						<h:outputText value="#{estabelecimento.endRua}" />,
+						<h:outputText value="#{estabelecimento.endNumero}" />,
+						<h:outputText value="#{estabelecimento.endRua}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Imagem" />
+						</f:facet>
+						<p:graphicImage id="xyimagem" width="150px" style="width:150px;height:150px" value="#{estabelecimento.imagem}"  />
+					</p:column>						
+					
+					<p:column style="width:20px;text-align: left;align: left">
+			            <p:commandButton update=":formularioPesquisar:documentPanel" oncomplete="PF('documentDialog').show()" title="Detalhes do Estabelecimento" icon="ui-icon-search">
+			                <f:setPropertyActionListener value="#{estabelecimento}" target="#{pesquisaAplicacaoBBen.estabelecimento}" />
+			            </p:commandButton>
+			        </p:column>
+					
+				</p:dataTable>
+				
+				
+					<p:dialog global="true" id="dialog" header="Estabelecimento" showEffect="fade" widgetVar="documentDialog" modal="true" resizable="false">
+				        <p:outputPanel id="documentPanel">
+				            <p:panelGrid  columns="4" columnClasses="label,value" rendered="#{pesquisaAplicacaoBBen.estabelecimento ne null}">
+				                <h:outputLabel for="name" value="Nome Fantasia: " />
+				                <p:inputText id="name" placeholder="Nome Fantasia"  value="#{pesquisaAplicacaoBBen.estabelecimento.nomeFantasia}"/>
+				 
+				                <h:outputLabel for="xemail" value="E-mail:" />
+				                <p:inputText id="xemail" placeholder="E-mail"  value="#{pesquisaAplicacaoBBen.estabelecimento.email}"/>
+				 
+				                <h:outputLabel for="xsite" value="Site:" />
+				                <p:inputText id="xsite" placeholder="Site"  value="#{pesquisaAplicacaoBBen.estabelecimento.site}"/>
+				                
+	                			<h:outputLabel for="xface" value="Facebook:" />
+				                <p:inputText id="xface" value="#{pesquisaAplicacaoBBen.estabelecimento.facebook}" />					                
+				                
+				                <h:outputLabel for="xtel" value="Telefone:" />
+				                <p:inputText id="xtel" placeholder="Telefone"  value="#{pesquisaAplicacaoBBen.estabelecimento.telefone}"/>
+				                
+				                <h:outputLabel for="xendereco" value="Endereço:" />
+				                <p:inputText id="xendereco" placeholder="Endereço"  value="#{pesquisaAplicacaoBBen.estabelecimento.endRua}"/>
+				                
+				                <h:outputLabel for="xnumero" value="Número:" />
+				                <p:inputText id="xnumero" placeholder="Número"  value="#{pesquisaAplicacaoBBen.estabelecimento.endNumero}"/>
+				                
+				                <h:outputLabel for="xcomplemento" value="Complemento:" />
+				                <p:inputText id="xcomplemento" placeholder="Complemento"  value="#{pesquisaAplicacaoBBen.estabelecimento.endComplemento}"/>			                
+				                
+				                <h:outputLabel for="xbairro" value="Bairro:" />
+				                <p:inputText id="xbairro" placeholder="Bairro"  value="#{pesquisaAplicacaoBBen.estabelecimento.bairro}"/>
+				                
+	                			<h:outputLabel for="xcep" value="Cep:" />
+				                <p:inputText id="xcep" value="#{pesquisaAplicacaoBBen.estabelecimento.cep}" />	
+				                
+				                <h:outputLabel for="xdestaque" value="Destaque:" />
+				                <p:selectBooleanCheckbox id="xdestaque" value="#{pesquisaAplicacaoBBen.estabelecimento.idDestaque}" />
+	
+	                			<h:outputLabel for="xposicao" value="Posição:" />
+				                <p:inputText id="xposicao" value="#{pesquisaAplicacaoBBen.estabelecimento.posicao}" />				                
+				                
+				                <h:outputLabel for="xdatainclusao" value="Data Inclusão:" />
+								<h:outputText id="xdatainclusao" value="#{pesquisaAplicacaoBBen.estabelecimento.dhInclusao}" >
+								    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								</h:outputText>
+
+	                			<h:outputLabel for="ximagem" value="Imagem:" />
+				                <p:graphicImage id="ximagem" width="150px" style="width:150px;height:150px" value="#{pesquisaAplicacaoBBen.estabelecimento.imagem}"  />
+				                
+				                <h:outputLabel for="xfile" value="Imagem:" />
+				                <p:fileUpload fileUploadListener="#{pesquisaAplicacaoBBen.preparaImagem}" id="xfile" update="dialog" value="#{pesquisaAplicacaoBBen.estabelecimento.file}" mode="simple" skinSimple="true"/>
+				                
+				                <h:outputLabel  value="Nome Imagem:" />
+				                <h:outputLabel  value="#{pesquisaAplicacaoBBen.estabelecimento.imagem.name}" />
+				            </p:panelGrid>
+				           <p align='center'>
+				                	<p:commandButton ajax="false" action="#{pesquisaAplicacaoBBen.salvar}" value="Salvar" icon="ui-icon-update" style="display:block;margin:10px 0" validateClient="true"/>
+				           </p>	
+				        </p:outputPanel>
+				    </p:dialog>
+		
+		
+		
+		
+	</h:form>
+    </h:body>
+    </f:view>
+</html>
