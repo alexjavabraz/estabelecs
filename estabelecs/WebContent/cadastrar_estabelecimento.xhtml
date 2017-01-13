@@ -48,11 +48,11 @@
 		    
 		    <h:outputText value="Página do Facebook" />
 		    <h:outputText value="Destacar?" />  
-		    <h:outputText value="Logo (150 px x 150 px)" />
+		    <h:outputText value="" />
 		     
 		    <p:inputText id="facebookid" placeholder="Página do Facebook"  value="#{meuManagedBBean.estabelecimento.facebook}"/>	
         	<p:selectBooleanCheckbox value="#{meuManagedBBean.destaque}" />
-    		<p:fileUpload value="#{meuManagedBBean.file}" mode="simple" skinSimple="true"/>
+        	<h:outputText value="" />
     		
 		    <h:outputText value="Slogan" />
 		    <h:outputText value="Posição" />  
@@ -63,6 +63,13 @@
 		    <h:outputText value="Quanto maior o valor, mais acima na lista aparecerá" />		    
  
 			</p:panelGrid>
+			<p:panelGrid columns="4">
+	    		<p:fileUpload value="#{meuManagedBBean.file}" mode="simple" skinSimple="true"/>
+	    		<p:fileUpload value="#{meuManagedBBean.file2}" mode="simple" skinSimple="true"/>
+	    		<p:fileUpload value="#{meuManagedBBean.file3}" mode="simple" skinSimple="true"/>
+	    		<p:fileUpload value="#{meuManagedBBean.file4}" mode="simple" skinSimple="true"/>
+    		</p:panelGrid>			
+			
 				<p:multiSelectListbox value="#{meuManagedBBean.selection}"
 					effect="highlight" header="Categoria" showHeaders="true" >
 					<f:selectItems value="#{meuManagedBBean.categories}"  filter="true" filterMatchMode="contains" />
