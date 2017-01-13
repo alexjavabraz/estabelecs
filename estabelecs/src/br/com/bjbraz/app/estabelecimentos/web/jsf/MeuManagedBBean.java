@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -48,6 +49,9 @@ public class MeuManagedBBean extends BasicBBean {
 	private String option;
 
 	private UploadedFile file;
+	private UploadedFile file2;
+	private UploadedFile file3;
+	private UploadedFile file4;
 	private boolean destaque = false;
 	private String phone;
 	private String celPhone;
@@ -65,8 +69,14 @@ public class MeuManagedBBean extends BasicBBean {
 	private CadastroEstabelecimentoService service;
 
 	private boolean temImagem = false;
+	private boolean temImagem2 = false;
+	private boolean temImagem3 = false;
+	private boolean temImagem4 = false;
 
 	private StreamedContent imagem;
+	private StreamedContent imagem2;
+	private StreamedContent imagem3;
+	private StreamedContent imagem4;
 
 	public void inicializar() {
 		estabelecimento = new Estabelecimento();
@@ -163,11 +173,16 @@ public class MeuManagedBBean extends BasicBBean {
 	
 	public String next() {
 		if (file != null && (null != selection) && ("".equals(selection)) ) {
+			
 			fileName = file.getFileName();
 			FacesMessage message = new FacesMessage("Succesful", fileName + " is uploaded.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 
 			preparaImagem();
+			preparaImagem2();
+			preparaImagem3();
+			preparaImagem4();
+			
 			return "index2";
 		}else{
 			FacesMessage message = new FacesMessage("Favor informar Categoria => Grupo => SubGrupo");
@@ -193,16 +208,20 @@ public class MeuManagedBBean extends BasicBBean {
 			fileName = file.getFileName();
 			FacesMessage message = new FacesMessage("Succesful", fileName + " is uploaded.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
-
 			preparaImagem();
+			preparaImagem2();
+			preparaImagem3();
+			preparaImagem4();
 			
-			return "index2";
+			
 		}else{
 			FacesMessage message = new FacesMessage("Favor informar Categoria => Grupo => SubGrupo");
 			FacesContext.getCurrentInstance().addMessage(null, message);
+			return null;
 		}
-
-		return null;
+		
+		return "index2";
+		
 	}
 
 	public String gravar() {
@@ -223,6 +242,17 @@ public class MeuManagedBBean extends BasicBBean {
 		if (esg != null ) {
 			try{
 				getEstabelecimento().setImagem1(IOUtils.toByteArray(file.getInputstream()));
+				
+				if(file2 != null)
+					getEstabelecimento().setImagem2(IOUtils.toByteArray(file2.getInputstream()));
+				
+				if(file3 != null)
+					getEstabelecimento().setImagem3(IOUtils.toByteArray(file3.getInputstream()));
+				
+				if(file4 != null)
+					getEstabelecimento().setImagem4(IOUtils.toByteArray(file4.getInputstream()));
+				
+				getEstabelecimento().setDhInclusao(new Date());
 				service.salvarEstabelecimento(getEstabelecimento());
 				
 				FacesMessage message = new FacesMessage(getEstabelecimento().getNomeFantasia() + " salvo com sucesso !");
@@ -253,6 +283,60 @@ public class MeuManagedBBean extends BasicBBean {
 			imagem = new DefaultStreamedContent(new ByteArrayInputStream(bytes), "image/png");
 			
 			temImagem = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void preparaImagem2() {
+		try {
+			BufferedImage bufferedImg = new BufferedImage(100, 25, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2 = bufferedImg.createGraphics();
+			g2.drawString("This is a text", 0, 10);
+			
+			byte[] bytes = IOUtils.toByteArray(file2.getInputstream());
+			
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImg, "png", os);
+			imagem2 = new DefaultStreamedContent(new ByteArrayInputStream(bytes), "image/png");
+			
+			temImagem2 = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void preparaImagem3() {
+		try {
+			BufferedImage bufferedImg = new BufferedImage(100, 25, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2 = bufferedImg.createGraphics();
+			g2.drawString("This is a text", 0, 10);
+			
+			byte[] bytes = IOUtils.toByteArray(file3.getInputstream());
+			
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImg, "png", os);
+			imagem3 = new DefaultStreamedContent(new ByteArrayInputStream(bytes), "image/png");
+			
+			temImagem3 = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void preparaImagem4() {
+		try {
+			BufferedImage bufferedImg = new BufferedImage(100, 25, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2 = bufferedImg.createGraphics();
+			g2.drawString("This is a text", 0, 10);
+			
+			byte[] bytes = IOUtils.toByteArray(file4.getInputstream());
+			
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImg, "png", os);
+			imagem4 = new DefaultStreamedContent(new ByteArrayInputStream(bytes), "image/png");
+			
+			temImagem4 = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -328,6 +412,78 @@ public class MeuManagedBBean extends BasicBBean {
 
 	public void setImagem(StreamedContent imagem) {
 		this.imagem = imagem;
+	}
+
+	public UploadedFile getFile2() {
+		return file2;
+	}
+
+	public void setFile2(UploadedFile file2) {
+		this.file2 = file2;
+	}
+
+	public UploadedFile getFile3() {
+		return file3;
+	}
+
+	public void setFile3(UploadedFile file3) {
+		this.file3 = file3;
+	}
+
+	public UploadedFile getFile4() {
+		return file4;
+	}
+
+	public void setFile4(UploadedFile file4) {
+		this.file4 = file4;
+	}
+
+	public StreamedContent getImagem2() {
+		return imagem2;
+	}
+
+	public void setImagem2(StreamedContent imagem2) {
+		this.imagem2 = imagem2;
+	}
+
+	public StreamedContent getImagem3() {
+		return imagem3;
+	}
+
+	public void setImagem3(StreamedContent imagem3) {
+		this.imagem3 = imagem3;
+	}
+
+	public StreamedContent getImagem4() {
+		return imagem4;
+	}
+
+	public void setImagem4(StreamedContent imagem4) {
+		this.imagem4 = imagem4;
+	}
+
+	public boolean isTemImagem2() {
+		return temImagem2;
+	}
+
+	public void setTemImagem2(boolean temImagem2) {
+		this.temImagem2 = temImagem2;
+	}
+
+	public boolean isTemImagem3() {
+		return temImagem3;
+	}
+
+	public void setTemImagem3(boolean temImagem3) {
+		this.temImagem3 = temImagem3;
+	}
+
+	public boolean isTemImagem4() {
+		return temImagem4;
+	}
+
+	public void setTemImagem4(boolean temImagem4) {
+		this.temImagem4 = temImagem4;
 	}
 
 }

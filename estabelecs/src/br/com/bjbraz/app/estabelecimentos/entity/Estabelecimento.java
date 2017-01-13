@@ -1,13 +1,10 @@
 package br.com.bjbraz.app.estabelecimentos.entity;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -138,7 +135,25 @@ public class Estabelecimento implements Serializable {
     private StreamedContent imagem;
     
     @Transient
+    private StreamedContent stream4;
+    
+    @Transient
+    private StreamedContent stream2;
+    
+    @Transient
+    private StreamedContent stream3;    
+    
+    @Transient
     private UploadedFile file;
+    
+    @Transient
+    private UploadedFile file2;
+    
+    @Transient
+    private UploadedFile file3;
+    
+    @Transient
+    private UploadedFile file4;    
 
     public Estabelecimento() {
     }
@@ -369,20 +384,39 @@ public class Estabelecimento implements Serializable {
 	
 	public StreamedContent getImagem() {
 		try {
-			imagem = null;
-			BufferedImage bufferedImg = new BufferedImage(100, 25, BufferedImage.TYPE_INT_RGB);
-			Graphics2D g2 = bufferedImg.createGraphics();
-			g2.drawString("This is a text", 0, 10);
-			
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			ImageIO.write(bufferedImg, "png", os);
-			imagem = new DefaultStreamedContent(new ByteArrayInputStream(getImagem1()), "image/png", "imagem"+System.currentTimeMillis()+".png");
+			InputStream is = new ByteArrayInputStream(imagem1);
+			imagem = new DefaultStreamedContent(is, "image/jpeg", System.currentTimeMillis()+"fileName.jpg");
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		
 		return imagem;
 	}
+	
+	public StreamedContent getStram2() {
+		try {
+			InputStream is = new ByteArrayInputStream(imagem2);
+			stream2 = new DefaultStreamedContent(is, "image/jpeg", System.currentTimeMillis()+"fileName.jpg");
+		} catch (Exception e) {
+		}
+		return stream2;
+	}
+	
+	public StreamedContent getStram3() {
+		try {
+			InputStream is = new ByteArrayInputStream(imagem3);
+			stream3 = new DefaultStreamedContent(is, "image/jpeg", System.currentTimeMillis()+"fileName.jpg");
+		} catch (Exception e) {
+		}
+		return stream3;
+	}
+	
+	public StreamedContent getStram4() {
+		try {
+			InputStream is = new ByteArrayInputStream(imagem4);
+			stream4 = new DefaultStreamedContent(is, "image/jpeg", System.currentTimeMillis()+"fileName.jpg");
+		} catch (Exception e) {
+		}
+		return stream4;
+	}	
 	
 	public void setImagem(StreamedContent s ){
 		imagem = s;
@@ -419,5 +453,31 @@ public class Estabelecimento implements Serializable {
 	public void setTelefoneCelular(String telefoneCelular) {
 		this.telefoneCelular = telefoneCelular;
 	}
+
+	public UploadedFile getFile2() {
+		return file2;
+	}
+
+	public void setFile2(UploadedFile file2) {
+		this.file2 = file2;
+	}
+
+	public UploadedFile getFile3() {
+		return file3;
+	}
+
+	public void setFile3(UploadedFile file3) {
+		this.file3 = file3;
+	}
+
+	public UploadedFile getFile4() {
+		return file4;
+	}
+
+	public void setFile4(UploadedFile file4) {
+		this.file4 = file4;
+	}
+	
+	
 	
 }

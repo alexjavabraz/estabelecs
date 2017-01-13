@@ -91,7 +91,7 @@ public class SimpleJDBCDaoImpl extends GenericJdbcDao implements SimpleJDBCDao {
 				+ " from estabelecimento e,estabelecimento_sub_grupo s  " + " where   " + " (e.nome_fantasia like ('%"
 				+ query + "%')  " + " or   " + " e.slogam like         ('%" + query + "%')  " + " or   "
 				+ " s.nome_sub_grupo like ('%" + query + "%'))  " + " and e.id_sub_grupo = s.id_sg  "
-				+ " and s.in_ativo  = 1  " + " order by e.id_destaque, e.dh_inclusao ";
+				+ " and s.in_ativo  = 1  " + " order by e.id_destaque desc, CAST(e.posicao AS SIGNED) DESC ";
 
 		// List<java.util.Map<String, Object>> mapaRetorno =
 		// getSimpleJdbcTemplate().queryForList(sql, idGrupo);
@@ -188,7 +188,7 @@ public class SimpleJDBCDaoImpl extends GenericJdbcDao implements SimpleJDBCDao {
 					" where e.id_sub_grupo = s.id_sg   "+
 					" and  s.id_grupo = ?    "+
 					" and s.in_ativo  = 1	 "+
-					" order by e.id_destaque desc, e.dh_inclusao";
+					" order by e.id_destaque desc, CAST(e.posicao AS SIGNED) DESC ";
 			mapaRetorno = getJdbcTemplate().queryForList(sql, idGrupo);
 			
 			if(mapaRetorno != null && !mapaRetorno.isEmpty()){
@@ -209,8 +209,8 @@ public class SimpleJDBCDaoImpl extends GenericJdbcDao implements SimpleJDBCDao {
 					e.setImagem2((byte[]) linha.get("imagem2"));
 					e.setImagem3((byte[]) linha.get("imagem3"));
 					e.setImagem4((byte[]) linha.get("imagem4"));
-					e.setSgrupo(new EstabelecimentoSubGrupo());
-					e.getSgrupo().setNomeSubGrupo((String) linha.get("nome_sub_grupo"));
+					e.setEstabelecimentoSugGrupo(new EstabelecimentoSubGrupo());
+					e.getEstabelecimentoSugGrupo().setNomeSubGrupo((String) linha.get("nome_sub_grupo"));
 					retorno.add(e);
 					
 				}
@@ -251,7 +251,7 @@ public class SimpleJDBCDaoImpl extends GenericJdbcDao implements SimpleJDBCDao {
 					"s.nome_sub_grupo  "+
 				"FROM estabelecimento e, estabelecimento_sub_grupo s  "+
 				"where e.id_sub_grupo = s.id_sg and s.id_sg	= ?  "+
-				"order by e.id_destaque desc, e.nome_fantasia";
+				" order by e.id_destaque desc, CAST(e.posicao AS SIGNED) DESC ";
 			mapaRetorno = getJdbcTemplate().queryForList(sql, idSubGrupo);
 			
 			if(mapaRetorno != null && !mapaRetorno.isEmpty()){
@@ -269,8 +269,8 @@ public class SimpleJDBCDaoImpl extends GenericJdbcDao implements SimpleJDBCDao {
 					e.setSlogam((String) linha.get("slogam"));
 					e.setTelefone((String) linha.get("telefone"));
 					e.setImagem1((byte[]) linha.get("imagem1"));
-					e.setSgrupo(new EstabelecimentoSubGrupo());
-					e.getSgrupo().setNomeSubGrupo((String) linha.get("nome_sub_grupo"));
+					e.setEstabelecimentoSugGrupo(new EstabelecimentoSubGrupo());
+					e.getEstabelecimentoSugGrupo().setNomeSubGrupo((String) linha.get("nome_sub_grupo"));
 					retorno.add(e);
 					
 				}

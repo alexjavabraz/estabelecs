@@ -21,6 +21,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +58,62 @@ public class PesquisaAplicacaoBBen {
 		String idSubGrupo = (String) event.getComponent().getAttributes().get("idSubGrupo");
 		estabelecimentos = service.listarPorSubGrupo(Integer.parseInt(idSubGrupo));
 	}
+	
+	public StreamedContent getImagem() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("image_id");
+        if (id != null) {
+            Integer imagemId = Integer.parseInt(id);
+            for (Estabelecimento c : getEstabelecimentos()) {
+                if (c.getId().intValue() == imagemId.intValue()) {
+                    return c.getImagem();
+                }
+            }
+        }
+        
+        return new DefaultStreamedContent();
+    }
+	
+	public StreamedContent getImagem2() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("image_id");
+        if (id != null) {
+            Integer imagemId = Integer.parseInt(id);
+            for (Estabelecimento c : getEstabelecimentos()) {
+                if (c.getId().intValue() == imagemId.intValue()) {
+                    return c.getStram2();
+                }
+            }
+        }
+        
+        return new DefaultStreamedContent();
+    }	
+	
+	public StreamedContent getImagem3() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("image_id");
+        if (id != null) {
+            Integer imagemId = Integer.parseInt(id);
+            for (Estabelecimento c : getEstabelecimentos()) {
+                if (c.getId().intValue() == imagemId.intValue()) {
+                    return c.getStram3();
+                }
+            }
+        }
+        
+        return new DefaultStreamedContent();
+    }
+	
+	public StreamedContent getImagem4() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("image_id");
+        if (id != null) {
+            Integer imagemId = Integer.parseInt(id);
+            for (Estabelecimento c : getEstabelecimentos()) {
+                if (c.getId().intValue() == imagemId.intValue()) {
+                    return c.getStram4();
+                }
+            }
+        }
+        
+        return new DefaultStreamedContent();
+    }		
 
 	public void salvar() {
 		try {

@@ -79,10 +79,6 @@
 		
 		<p:panelGrid columns="2">
 		
-		
-		
-		
-		
 		</p:panelGrid>
 		
 		<p:dataTable id="tbl" var="estabelecimento" rendered="#{pesquisaAplicacaoBBen.estabelecimentos ne null}" value="#{pesquisaAplicacaoBBen.estabelecimentos}"
@@ -99,7 +95,7 @@
 						<f:facet name="header">
 							<h:outputText value="Sub-Grupo" />
 						</f:facet>
-						<h:outputText value="#{estabelecimento.sgrupo.nomeSubGrupo}" />
+						<h:outputText value="#{estabelecimento.estabelecimentoSugGrupo.nomeSubGrupo}" />
 					</p:column>						
 					
 					<p:column>
@@ -118,10 +114,18 @@
 					
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Telefone" />
+							<h:outputText value="Telefones" />
 						</f:facet>
-						<h:outputText value="#{estabelecimento.telefone}" />
-					</p:column>	
+						<h:outputText value="#{estabelecimento.telefone}" /> - 
+						<h:outputText value="#{estabelecimento.telefoneCelular}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Posicionamento" />
+						</f:facet>
+						<h:outputText value="#{estabelecimento.idDestaque ? 'Destacado na posicao '.concat(estabelecimento.posicao) : ''}" /> 
+					</p:column>		
 					
 					<p:column>
 						<f:facet name="header">
@@ -136,79 +140,24 @@
 						<f:facet name="header">
 							<h:outputText value="Imagem" />
 						</f:facet>
-						<p:graphicImage id="xyimagem" width="150px" style="width:150px;height:150px" value="#{estabelecimento.imagem}"  />
-					</p:column>						
+						
+						<p:graphicImage style="width:150px;height:150px" value="#{pesquisaAplicacaoBBen.imagem}">
+							    <f:param name="image_id" value="#{estabelecimento.id}"/>
+						</p:graphicImage>
+						
+					</p:column>
 					
-					<p:column style="width:20px;text-align: left;align: left">
-			            <p:commandButton update=":formularioPesquisar:documentPanel" oncomplete="PF('documentDialog').show()" title="Detalhes do Estabelecimento" icon="ui-icon-search">
-			                <f:setPropertyActionListener value="#{estabelecimento}" target="#{pesquisaAplicacaoBBen.estabelecimento}" />
-			            </p:commandButton>
-			        </p:column>
+					<p:column>
+								<f:facet name="header">
+									<h:outputLabel for="xdatainclusao" value="Data Inclusão" />
+								</f:facet>
+								<h:outputText id="xdatainclusao" value="#{estabelecimento.dhInclusao}" >
+								    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								</h:outputText>
+					</p:column>	
 					
 				</p:dataTable>
 				
-				
-					<p:dialog global="true" id="dialog" header="Estabelecimento" showEffect="fade" widgetVar="documentDialog" modal="true" resizable="false">
-				        <p:outputPanel id="documentPanel">
-				            <p:panelGrid  columns="4" columnClasses="label,value" rendered="#{pesquisaAplicacaoBBen.estabelecimento ne null}">
-				                <h:outputLabel for="name" value="Nome Fantasia: " />
-				                <p:inputText id="name" placeholder="Nome Fantasia"  value="#{pesquisaAplicacaoBBen.estabelecimento.nomeFantasia}"/>
-				 
-				                <h:outputLabel for="xemail" value="E-mail:" />
-				                <p:inputText id="xemail" placeholder="E-mail"  value="#{pesquisaAplicacaoBBen.estabelecimento.email}"/>
-				 
-				                <h:outputLabel for="xsite" value="Site:" />
-				                <p:inputText id="xsite" placeholder="Site"  value="#{pesquisaAplicacaoBBen.estabelecimento.site}"/>
-				                
-	                			<h:outputLabel for="xface" value="Facebook:" />
-				                <p:inputText id="xface" value="#{pesquisaAplicacaoBBen.estabelecimento.facebook}" />					                
-				                
-				                <h:outputLabel for="xtel" value="Telefone:" />
-				                <p:inputText id="xtel" placeholder="Telefone"  value="#{pesquisaAplicacaoBBen.estabelecimento.telefone}"/>
-				                
-				                <h:outputLabel for="xendereco" value="Endereço:" />
-				                <p:inputText id="xendereco" placeholder="Endereço"  value="#{pesquisaAplicacaoBBen.estabelecimento.endRua}"/>
-				                
-				                <h:outputLabel for="xnumero" value="Número:" />
-				                <p:inputText id="xnumero" placeholder="Número"  value="#{pesquisaAplicacaoBBen.estabelecimento.endNumero}"/>
-				                
-				                <h:outputLabel for="xcomplemento" value="Complemento:" />
-				                <p:inputText id="xcomplemento" placeholder="Complemento"  value="#{pesquisaAplicacaoBBen.estabelecimento.endComplemento}"/>			                
-				                
-				                <h:outputLabel for="xbairro" value="Bairro:" />
-				                <p:inputText id="xbairro" placeholder="Bairro"  value="#{pesquisaAplicacaoBBen.estabelecimento.bairro}"/>
-				                
-	                			<h:outputLabel for="xcep" value="Cep:" />
-				                <p:inputText id="xcep" value="#{pesquisaAplicacaoBBen.estabelecimento.cep}" />	
-				                
-				                <h:outputLabel for="xdestaque" value="Destaque:" />
-				                <p:selectBooleanCheckbox id="xdestaque" value="#{pesquisaAplicacaoBBen.estabelecimento.idDestaque}" />
-	
-	                			<h:outputLabel for="xposicao" value="Posição:" />
-				                <p:inputText id="xposicao" value="#{pesquisaAplicacaoBBen.estabelecimento.posicao}" />				                
-				                
-				                <h:outputLabel for="xdatainclusao" value="Data Inclusão:" />
-								<h:outputText id="xdatainclusao" value="#{pesquisaAplicacaoBBen.estabelecimento.dhInclusao}" >
-								    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-								</h:outputText>
-
-	                			<h:outputLabel for="ximagem" value="Imagem:" />
-				                <p:graphicImage id="ximagem" width="150px" style="width:150px;height:150px" value="#{pesquisaAplicacaoBBen.estabelecimento.imagem}"  />
-				                
-				                <h:outputLabel for="xfile" value="Imagem:" />
-				                <p:fileUpload fileUploadListener="#{pesquisaAplicacaoBBen.preparaImagem}" id="xfile" update="dialog" value="#{pesquisaAplicacaoBBen.estabelecimento.file}" mode="simple" skinSimple="true"/>
-				                
-				                <h:outputLabel  value="Nome Imagem:" />
-				                <h:outputLabel  value="#{pesquisaAplicacaoBBen.estabelecimento.imagem.name}" />
-				            </p:panelGrid>
-				           <p align='center'>
-				                	<p:commandButton ajax="false" action="#{pesquisaAplicacaoBBen.salvar}" value="Salvar" icon="ui-icon-update" style="display:block;margin:10px 0" validateClient="true"/>
-				           </p>	
-				        </p:outputPanel>
-				    </p:dialog>
-		
-		
-		
 		
 	</h:form>
     </h:body>

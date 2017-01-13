@@ -32,7 +32,7 @@
 		    
 		    <p:inputText id="bairro" placeholder="Bairro"  value="#{meuManagedBBean.estabelecimento.bairro}" />
 		    <p:inputMask id="telFixo" placeholder="Telefone Fixo"  value="#{meuManagedBBean.estabelecimento.telefone}"    mask="(999) 9999-9999"/>	    
-			<p:inputMask id="telCel" placeholder="Telefone Celular"  maxlength="6" value="#{meuManagedBBean.estabelecimento.slogam}" mask="(999) 99999-9999"/>	    
+			<p:inputMask id="telCel" placeholder="Telefone Celular"  maxlength="6" value="#{meuManagedBBean.estabelecimento.telefoneCelular}" mask="(999) 99999-9999"/>	    
 		    
 		    <h:outputText value="Cep" /> 
 		    <h:outputText value="Site" /> 
@@ -47,20 +47,24 @@
 		    
 		    <h:outputText value="Página do Facebook" />
 		    <h:outputText value="Destacar?" />  
-		    <h:outputText value="Logo (150 px x 150 px)" />
+		    <h:outputText value="" />
 		     
 		    <p:inputText id="facebookid" placeholder="Página do Facebook"  value="#{meuManagedBBean.estabelecimento.facebook}"/>	
         	<p:selectBooleanCheckbox value="#{meuManagedBBean.destaque}" />
-    		<p:graphicImage width="150px" style="width:150px;height:150px" value="#{meuManagedBBean.imagem}" rendered="#{meuManagedBBean.temImagem}" />
- 
+        	<h:outputText value="" />
+
 			</p:panelGrid>
 				<p:multiSelectListbox value="#{meuManagedBBean.selection}"
 					effect="highlight" header="Categoria" showHeaders="true" >
 					<f:selectItems value="#{meuManagedBBean.categories}"  filter="true" filterMatchMode="contains" />
 				</p:multiSelectListbox> 		
-		<p align="center">
-			
-		</p>
+		<p:panelGrid columns="4">
+			<p:graphicImage width="150px" style="width:150px;height:150px" value="#{meuManagedBBean.imagem}"  rendered="#{meuManagedBBean.temImagem}" />
+    		<p:graphicImage width="150px" style="width:150px;height:150px" value="#{meuManagedBBean.imagem2}" rendered="#{meuManagedBBean.temImagem2}" />
+    		<p:graphicImage width="150px" style="width:150px;height:150px" value="#{meuManagedBBean.imagem3}" rendered="#{meuManagedBBean.temImagem3}" />
+    		<p:graphicImage width="150px" style="width:150px;height:150px" value="#{meuManagedBBean.imagem4}" rendered="#{meuManagedBBean.temImagem4}" />
+ 
+		</p:panelGrid>
 			
 		<p:panelGrid columns="3" layout="grid" style="vertical-align:center">
 				<p:commandButton ajax="false" action="#{meuManagedBBean.voltar}" value="Voltar" icon="ui-icon-check" style="display:block;margin:10px 0" validateClient="true"/>

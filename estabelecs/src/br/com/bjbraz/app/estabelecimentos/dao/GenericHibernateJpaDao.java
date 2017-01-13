@@ -1,13 +1,13 @@
 package br.com.bjbraz.app.estabelecimentos.dao;
 
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Order;
 import org.springframework.orm.hibernate5.HibernateCallback;
 
 /**
@@ -47,6 +47,16 @@ public abstract class GenericHibernateJpaDao<T, ID extends Serializable> extends
         org.hibernate.Criteria crit = session.createCriteria(getEntityBeanType());
         return fillInCriterions(crit, criterion).list();
     }
+    
+    @SuppressWarnings("unchecked")
+    protected List<T> findByCriteria(Order order1, Order order2, org.hibernate.criterion.Criterion... criterion) {
+        // Using Hibernate, more difficult with EntityManager and EJB-QL
+        org.hibernate.Session session = getHibernateSession();
+        org.hibernate.Criteria crit = session.createCriteria(getEntityBeanType());
+        crit.addOrder(order1);
+        crit.addOrder(order2);
+        return fillInCriterions(crit, criterion).list();
+    }    
 
     /**
      * Retorna uma instancia utilizando uma criteria.

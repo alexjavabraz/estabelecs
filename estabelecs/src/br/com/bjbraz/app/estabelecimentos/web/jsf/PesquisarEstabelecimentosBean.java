@@ -10,12 +10,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,7 @@ import br.com.bjbraz.app.estabelecimentos.service.CadastroEstabelecimentoService
 
 @ManagedBean
 @Component
+@SessionScoped
 public class PesquisarEstabelecimentosBean extends BasicBBean {
 	
 	/**
@@ -51,6 +53,20 @@ public class PesquisarEstabelecimentosBean extends BasicBBean {
 	
 	public void salvar(){
 		try{
+			
+			if(getEstabelecimento().getFile() != null)
+				getEstabelecimento().setImagem1(IOUtils.toByteArray(getEstabelecimento().getFile().getInputstream()));
+			
+			if(getEstabelecimento().getFile2() != null)
+				getEstabelecimento().setImagem2(IOUtils.toByteArray(getEstabelecimento().getFile2().getInputstream()));
+			
+			if(getEstabelecimento().getFile3() != null)
+				getEstabelecimento().setImagem3(IOUtils.toByteArray(getEstabelecimento().getFile3().getInputstream()));
+			
+			if(getEstabelecimento().getFile4() != null)
+				getEstabelecimento().setImagem4(IOUtils.toByteArray(getEstabelecimento().getFile4().getInputstream()));
+			
+			
 			service.salvarEstabelecimento(getEstabelecimento());
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Estabelecimento SALVO com sucesso", "Estabelecimento SALVO com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, message);
@@ -72,6 +88,30 @@ public class PesquisarEstabelecimentosBean extends BasicBBean {
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImg, "png", os);
 			estabelecimento.setImagem(new DefaultStreamedContent(new ByteArrayInputStream(bytes), "image/png"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preparaImagem2() {
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preparaImagem3() {
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preparaImagem4() {
+		try {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,6 +148,61 @@ public class PesquisarEstabelecimentosBean extends BasicBBean {
 		this.filtro = filtro;
 	}
 	
+	public StreamedContent getImagem() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("image_id");
+        if (id != null) {
+            Integer imagemId = Integer.parseInt(id);
+            for (Estabelecimento c : getEstabelecimentos()) {
+                if (c.getId().intValue() == imagemId.intValue()) {
+                    return c.getImagem();
+                }
+            }
+        }
+        
+        return new DefaultStreamedContent();
+    }
+	
+	public StreamedContent getImagem2() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("image_id");
+        if (id != null) {
+            Integer imagemId = Integer.parseInt(id);
+            for (Estabelecimento c : getEstabelecimentos()) {
+                if (c.getId().intValue() == imagemId.intValue()) {
+                    return c.getStram2();
+                }
+            }
+        }
+        
+        return new DefaultStreamedContent();
+    }	
+	
+	public StreamedContent getImagem3() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("image_id");
+        if (id != null) {
+            Integer imagemId = Integer.parseInt(id);
+            for (Estabelecimento c : getEstabelecimentos()) {
+                if (c.getId().intValue() == imagemId.intValue()) {
+                    return c.getStram3();
+                }
+            }
+        }
+        
+        return new DefaultStreamedContent();
+    }
+	
+	public StreamedContent getImagem4() {
+        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("image_id");
+        if (id != null) {
+            Integer imagemId = Integer.parseInt(id);
+            for (Estabelecimento c : getEstabelecimentos()) {
+                if (c.getId().intValue() == imagemId.intValue()) {
+                    return c.getStram4();
+                }
+            }
+        }
+        
+        return new DefaultStreamedContent();
+    }	
 	
 
 }

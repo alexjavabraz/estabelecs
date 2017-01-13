@@ -11,18 +11,16 @@
 	<h:head>
 		<meta content="text/html; charset=ISO-8859-1"
 			http-equiv="Content-Type" />
-		<link type="text/css" rel="stylesheet"
-			href="#{request.contextPath}/themes/cupertino/skin.css" />
 	</h:head>
 
 	<h:body>
 
 		<ui:include src="menu.xhtml" />
 		<br/>
-		<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 		<h:form id="form" enctype="multipart/form-data">
 			
-			<p:panelGrid columns="3" layout="grid">
+			<p:panelGrid columns="5">
+			
 				<h:outputText value="Nome do Estabelecimento" /> 
 			    <h:outputText value="Endereço" /> 
 			    <h:outputText value="Número" /> 
@@ -44,7 +42,7 @@
 			    
 			    <p:inputText id="cep" placeholder="Cep"  value="#{pesquisarEstabelecimentosBean.filtro.cep}"/>
 			    <p:inputMask id="telFixo" placeholder="Telefone Fixo" value="#{pesquisarEstabelecimentosBean.filtro.telefone}"    mask="(999) 9999-9999"/>	    
-			    <p:inputMask id="telFixo" placeholder="Telefone Celular" value="#{pesquisarEstabelecimentosBean.filtro.telefoneCelular}" mask="(999) 99999-9999"/>
+			    <p:inputMask id="telMovel" placeholder="Telefone Celular" value="#{pesquisarEstabelecimentosBean.filtro.telefoneCelular}" mask="(999) 99999-9999"/>
 			    <p:inputText id="site" placeholder="Site"  value="#{pesquisarEstabelecimentosBean.filtro.site}"/>
 			    <p:inputText id="email" placeholder="E-mail"  value="#{pesquisarEstabelecimentosBean.filtro.email}">
 	            </p:inputText>
@@ -55,9 +53,14 @@
 				<p:commandButton ajax="false" action="#{pesquisarEstabelecimentosBean.pesquisar}" value="Pesquisar Estabelecimentos" icon="ui-icon-search" style="display:block;margin:10px 0" validateClient="true"/>
 			</p>
 
-				<p:dataTable id="tbl" var="estabelecimento" value="#{pesquisarEstabelecimentosBean.estabelecimentos}"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-					paginator="true" rows="10" style="margin-bottom:20px">
+				<p:dataTable 
+				id="tbl" 
+				var="estabelecimento" 
+				value="#{pesquisarEstabelecimentosBean.estabelecimentos}" 
+				paginator="true" rows="50" style="margin-bottom:20px"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="50,100,200"
+				>
 
 					<p:column>
 						<f:facet name="header">
@@ -96,18 +99,18 @@
 					
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Telefone" />
+							<h:outputText value="Telefones" />
 						</f:facet>
-						<h:outputText value="#{estabelecimento.telefone}" />
+						<h:outputText value="#{estabelecimento.telefone}" /> - 
+						<h:outputText value="#{estabelecimento.telefoneCelular}" />
 					</p:column>
 					
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Whatts-App" />
+							<h:outputText value="Posicionamento" />
 						</f:facet>
-						<h:outputText value="#{estabelecimento.telefoneCelular}" />
-					</p:column>		
-					
+						<h:outputText value="#{estabelecimento.idDestaque ? 'Destacado na posicao '.concat(estabelecimento.posicao) : ''}" /> 
+					</p:column>	 	
 					
 					<p:column>
 						<f:facet name="header">
@@ -115,28 +118,44 @@
 						</f:facet>
 						<h:outputText value="#{estabelecimento.endRua}" />,
 						<h:outputText value="#{estabelecimento.endNumero}" />,
-						<h:outputText value="#{estabelecimento.endRua}" />
+						<h:outputText value="#{estabelecimento.bairro}" />,
+						<h:outputText value="#{estabelecimento.cep}" />
 					</p:column>
 					
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Imagem" />
 						</f:facet>
-						<p:graphicImage id="xyimagem" width="150px" style="width:150px;height:150px" value="#{estabelecimento.imagem}"  />
-					</p:column>						
+						
+							<p:graphicImage style="width:150px;height:150px" value="#{pesquisarEstabelecimentosBean.imagem}">
+							    <f:param name="image_id" value="#{estabelecimento.id}"/>
+							</p:graphicImage>
+						
+					</p:column>		
+					
+					<p:column>
+								<f:facet name="header">
+									<h:outputLabel for="xdatainclusao" value="Data Inclusão" />
+								</f:facet>
+								<h:outputText id="xdatainclusao" value="#{estabelecimento.dhInclusao}" >
+								    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								</h:outputText>
+					</p:column>				
 					
 					<p:column style="width:20px;text-align: left;align: left">
 			            <p:commandButton update=":form:documentPanel" oncomplete="PF('documentDialog').show()" title="Detalhes do Estabelecimento" icon="ui-icon-search">
 			                <f:setPropertyActionListener value="#{estabelecimento}" target="#{pesquisarEstabelecimentosBean.estabelecimento}" />
 			            </p:commandButton>
 			        </p:column>
+			        
+			        
 					
 				</p:dataTable>
 				
 				
 					<p:dialog global="true" id="dialog" header="Estabelecimento" showEffect="fade" widgetVar="documentDialog" modal="true" resizable="false">
 				        <p:outputPanel id="documentPanel">
-				            <p:panelGrid  columns="4" columnClasses="label,value" rendered="#{pesquisarEstabelecimentosBean.estabelecimento ne null}">
+				            <p:panelGrid  columns="6" columnClasses="label,value" rendered="#{pesquisarEstabelecimentosBean.estabelecimento ne null}">
 				                <h:outputLabel for="name" value="Nome Fantasia: " />
 				                <p:inputText id="name" placeholder="Nome Fantasia"  value="#{pesquisarEstabelecimentosBean.estabelecimento.nomeFantasia}"/>
 				 
@@ -150,7 +169,10 @@
 				                <p:inputText id="xface" value="#{pesquisarEstabelecimentosBean.estabelecimento.facebook}" />					                
 				                
 				                <h:outputLabel for="xtel" value="Telefone:" />
-				                <p:inputText id="xtel" placeholder="Telefone"  value="#{pesquisarEstabelecimentosBean.estabelecimento.telefone}"/>
+				                <p:inputMask id="xtel" placeholder="Telefone"  value="#{pesquisarEstabelecimentosBean.estabelecimento.telefone}"     mask="(999) 9999-9999"/>
+				                
+				                 <h:outputLabel for="xcel" value="Celular" />
+				                <p:inputMask id="xcel" placeholder="Telefone"  value="#{pesquisarEstabelecimentosBean.estabelecimento.telefoneCelular}" mask="(999) 99999-9999"/>
 				                
 				                <h:outputLabel for="xendereco" value="Endereço:" />
 				                <p:inputText id="xendereco" placeholder="Endereço"  value="#{pesquisarEstabelecimentosBean.estabelecimento.endRua}"/>
@@ -173,19 +195,30 @@
 	                			<h:outputLabel for="xposicao" value="Posição:" />
 				                <p:inputText id="xposicao" value="#{pesquisarEstabelecimentosBean.estabelecimento.posicao}" />				                
 				                
-				                <h:outputLabel for="xdatainclusao" value="Data Inclusão:" />
-								<h:outputText id="xdatainclusao" value="#{pesquisarEstabelecimentosBean.estabelecimento.dhInclusao}" >
-								    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-								</h:outputText>
-
-	                			<h:outputLabel for="ximagem" value="Imagem:" />
-				                <p:graphicImage id="ximagem" width="150px" style="width:150px;height:150px" value="#{pesquisarEstabelecimentosBean.estabelecimento.imagem}"  />
-				                
-				                <h:outputLabel for="xfile" value="Imagem:" />
-				                <p:fileUpload fileUploadListener="#{pesquisarEstabelecimentosBean.preparaImagem}" id="xfile" update="dialog" value="#{pesquisarEstabelecimentosBean.estabelecimento.file}" mode="simple" skinSimple="true"/>
-				                
-				                <h:outputLabel  value="Nome Imagem:" />
-				                <h:outputLabel  value="#{pesquisarEstabelecimentosBean.estabelecimento.imagem.name}" />
+				                <p:graphicImage id="ximagem" style="width:150px;height:150px" value="#{pesquisarEstabelecimentosBean.imagem}">
+							    	<f:param name="image_id" value="#{pesquisarEstabelecimentosBean.estabelecimento.id}"/>
+								</p:graphicImage>
+								
+				                <p:graphicImage id="ximagem2" style="width:150px;height:150px" value="#{pesquisarEstabelecimentosBean.imagem2}">
+							    	<f:param name="image_id" value="#{pesquisarEstabelecimentosBean.estabelecimento.id}"/>
+								</p:graphicImage>
+								
+				                <p:graphicImage id="ximagem3" style="width:150px;height:150px" value="#{pesquisarEstabelecimentosBean.imagem3}">
+							    	<f:param name="image_id" value="#{pesquisarEstabelecimentosBean.estabelecimento.id}"/>
+								</p:graphicImage>
+								
+				                <p:graphicImage id="ximagem4" style="width:150px;height:150px" value="#{pesquisarEstabelecimentosBean.imagem4}">
+							    	<f:param name="image_id" value="#{pesquisarEstabelecimentosBean.estabelecimento.id}"/>
+								</p:graphicImage>
+								
+								<h:outputLabel>Slogan</h:outputLabel>	
+								<p:inputText id="xslogan" maxlength="250" value="#{pesquisarEstabelecimentosBean.estabelecimento.slogam}" />	
+								
+								<p:fileUpload id="xfile" update="dialog" value="#{pesquisarEstabelecimentosBean.estabelecimento.file}" mode="simple" skinSimple="true"/>
+								<p:fileUpload id="xfile2" update="dialog" value="#{pesquisarEstabelecimentosBean.estabelecimento.file2}" mode="simple" skinSimple="true"/>
+								
+								<p:fileUpload id="xfile3" update="dialog" value="#{pesquisarEstabelecimentosBean.estabelecimento.file3}" mode="simple" skinSimple="true"/>
+								<p:fileUpload id="xfile4" update="dialog" value="#{pesquisarEstabelecimentosBean.estabelecimento.file4}" mode="simple" skinSimple="true"/>
 				                
 				            </p:panelGrid>
 				                <p align='center'>
@@ -194,32 +227,6 @@
 				        </p:outputPanel>
 				    </p:dialog>
 				
-				<h3>Export Page Data Only</h3>
-				<h:commandLink>
-					<p:graphicImage name="imagens/excel.png" />
-					<p:dataExporter type="xls" target="tbl" fileName="cars"
-						pageOnly="true" />
-				</h:commandLink>
-
-				<h:commandLink>
-					<p:graphicImage name="imagens/pdf.png" />
-					<p:dataExporter type="pdf" target="tbl" fileName="cars"
-						pageOnly="true" />
-				</h:commandLink>
-
-				<h:commandLink>
-					<p:graphicImage name="imagens/csv.png" />
-					<p:dataExporter type="csv" target="tbl" fileName="cars"
-						pageOnly="true" />
-				</h:commandLink>
-
-				<h:commandLink>
-					<p:graphicImage name="/imagens/xml.png" />
-					<p:dataExporter type="xml" target="tbl" fileName="cars"
-						pageOnly="true" />
-				</h:commandLink>
-				
-
 		</h:form>
 
 	</h:body>

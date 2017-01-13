@@ -67,6 +67,7 @@ public class CadastroEstablecimentoServiceImpl implements CadastroEstabeleciment
     public Estabelecimento salvarEstabelecimento(Estabelecimento e) {
     	e.setIdEstado(25);
     	e.setIdCidade(4845);
+    	e.setEstabelecimentoSugGrupo(subGrupoDao.findById(e.getEstabelecimentoSugGrupo().getIdSg()));
         return estabelecimentoDao.salvar(e);
     }
 
